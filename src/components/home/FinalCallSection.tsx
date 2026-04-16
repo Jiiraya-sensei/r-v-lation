@@ -19,6 +19,7 @@ const FinalCallSection = () => {
   return (
     <section className="py-24 bg-black-deep relative overflow-hidden">
       <VideoBackground
+        heavy
         src="/videos/final-bg.mp4"
         poster={heroPoster}
         className="absolute inset-0 w-full h-full object-cover opacity-30"

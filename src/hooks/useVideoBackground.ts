@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
 
 /**
- * Returns true if background videos should play.
- * Disabled when:
- * - User prefers reduced motion
- * - Viewport is mobile (< 768px) — saves bandwidth and battery
- * - Device reports a slow connection (Save-Data or 2g/slow-2g)
+ * Returns video playback state.
+ * - `enabled`: false when reduced motion or slow connection
+ * - `isMobile`: true when viewport < 768px (used to skip heavy videos)
  */
 export const useVideoBackground = () => {
-  const [enabled, setEnabled] = useState(false);
+  const [state, setState] = useState({ enabled: false, isMobile: false });
 
   useEffect(() => {
     const compute = () => {
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const isMobile = window.innerWidth < 768;
       // @ts-expect-error - non-standard but widely supported
       const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
       const slowNetwork =
         conn && (conn.saveData === true || ["slow-2g", "2g"].includes(conn.effectiveType));
 
-      setEnabled(!reducedMotion && !slowNetwork);
+      setState({ enabled: !reducedMotion && !slowNetwork, isMobile });
     };
 
     compute();
@@ -31,5 +30,5 @@ export const useVideoBackground = () => {
     };
   }, []);
 
-  return enabled;
+  return state;
 };
