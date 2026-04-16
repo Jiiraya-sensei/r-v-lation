@@ -6,6 +6,7 @@ import TicketingSection from "@/components/home/TicketingSection";
 import JurySection from "@/components/home/JurySection";
 import ScholarshipsSection from "@/components/home/ScholarshipsSection";
 import FinalCallSection from "@/components/home/FinalCallSection";
+import QuebecAnchorSection from "@/components/home/QuebecAnchorSection";
 
 const Index = () => {
   return (
@@ -15,6 +16,7 @@ const Index = () => {
       <AuditionCallSection />
       <TicketingSection />
       <JurySection />
+      <QuebecAnchorSection />
       <ScholarshipsSection />
       <FinalCallSection />
     </Layout>
