@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import VideoBackground from "@/components/VideoBackground";
 import showPoster from "@/assets/show-stage.jpg";
 
 const fadeUp = {
@@ -21,17 +22,12 @@ const ShowSection = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
+            <VideoBackground
+              src="/videos/show-1.mp4"
               poster={showPoster}
+              alt="Scène en action"
               className="rounded-lg w-full h-[400px] object-cover"
-              aria-hidden="true"
-            >
-              <source src="/videos/show-1.mp4" type="video/mp4" />
-            </video>
+            />
           </motion.div>
 
           <motion.div
