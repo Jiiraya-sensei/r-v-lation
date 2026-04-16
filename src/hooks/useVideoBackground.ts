@@ -13,13 +13,12 @@ export const useVideoBackground = () => {
   useEffect(() => {
     const compute = () => {
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const isMobile = window.innerWidth < 768;
       // @ts-expect-error - non-standard but widely supported
       const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
       const slowNetwork =
         conn && (conn.saveData === true || ["slow-2g", "2g"].includes(conn.effectiveType));
 
-      setEnabled(!reducedMotion && !isMobile && !slowNetwork);
+      setEnabled(!reducedMotion && !slowNetwork);
     };
 
     compute();
