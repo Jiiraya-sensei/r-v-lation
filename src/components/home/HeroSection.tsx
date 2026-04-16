@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { EVENT_DATES } from "@/config/eventDates";
 import GoldParticles from "@/components/GoldParticles";
+import VideoBackground from "@/components/VideoBackground";
 import heroPoster from "@/assets/hero-stage.jpg";
 
 const HeroSection = () => {
@@ -20,17 +21,12 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
+        <VideoBackground
+          src="/videos/hero-bg.mp4"
           poster={heroPoster}
+          alt="Scène illuminée"
           className="w-full h-full object-cover"
-          aria-hidden="true"
-        >
-          <source src="/videos/hero-bg.mp4" type="video/mp4" />
-        </video>
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black-deep/70 via-black-deep/50 to-black-deep" />
       </div>
 

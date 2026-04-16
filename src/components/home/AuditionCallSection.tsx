@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import VideoBackground from "@/components/VideoBackground";
 import performerPoster from "@/assets/performer.jpg";
 
 const AuditionCallSection = () => {
@@ -38,17 +39,12 @@ const AuditionCallSection = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
           >
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
+            <VideoBackground
+              src="/videos/audition-bg.mp4"
               poster={performerPoster}
+              alt="Artiste en performance"
               className="rounded-lg w-full h-[450px] object-cover"
-              aria-hidden="true"
-            >
-              <source src="/videos/audition-bg.mp4" type="video/mp4" />
-            </video>
+            />
           </motion.div>
         </div>
       </div>
