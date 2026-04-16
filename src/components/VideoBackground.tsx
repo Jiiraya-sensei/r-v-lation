@@ -5,17 +5,20 @@ interface VideoBackgroundProps {
   poster: string;
   className?: string;
   alt?: string;
+  /** Heavy videos (>10MB) fall back to poster on mobile to save bandwidth */
+  heavy?: boolean;
 }
 
 /**
  * Renders a background video on capable devices, otherwise falls back to a poster image.
  * - Lazy preload metadata only
- * - Disabled on mobile, slow networks, or prefers-reduced-motion
+ * - Disabled on slow networks or prefers-reduced-motion
+ * - Heavy videos additionally disabled on mobile (<768px)
  */
-const VideoBackground = ({ src, poster, className, alt = "" }: VideoBackgroundProps) => {
-  const enabled = useVideoBackground();
+const VideoBackground = ({ src, poster, className, alt = "", heavy = false }: VideoBackgroundProps) => {
+  const { enabled, isMobile } = useVideoBackground();
 
-  if (!enabled) {
+  if (!enabled || (heavy && isMobile)) {
     return (
       <img
         src={poster}

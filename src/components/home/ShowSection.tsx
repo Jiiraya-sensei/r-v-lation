@@ -23,6 +23,7 @@ const ShowSection = () => {
             viewport={{ once: true, amount: 0.3 }}
           >
             <VideoBackground
+              heavy
               src="/videos/show-1.mp4"
               poster={showPoster}
               alt="Scène en action"
