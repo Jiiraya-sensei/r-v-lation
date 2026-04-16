@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import audienceImg from "@/assets/audience.jpg";
+import audiencePoster from "@/assets/audience.jpg";
 
 const TicketingSection = () => {
   const { t } = useTranslation();
@@ -17,14 +17,17 @@ const TicketingSection = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
           >
-            <img
-              src={audienceImg}
-              alt="Foule enthousiaste"
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={audiencePoster}
               className="rounded-lg w-full h-[350px] object-cover"
-              loading="lazy"
-              width={800}
-              height={600}
-            />
+              aria-hidden="true"
+            >
+              <source src="/videos/ticket-bg.mp4" type="video/mp4" />
+            </video>
           </motion.div>
 
           <motion.div

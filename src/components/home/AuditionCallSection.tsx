@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import performerImg from "@/assets/performer.jpg";
+import performerPoster from "@/assets/performer.jpg";
 
 const AuditionCallSection = () => {
   const { t } = useTranslation();
@@ -38,14 +38,17 @@ const AuditionCallSection = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
           >
-            <img
-              src={performerImg}
-              alt="Artiste en performance"
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={performerPoster}
               className="rounded-lg w-full h-[450px] object-cover"
-              loading="lazy"
-              width={800}
-              height={1000}
-            />
+              aria-hidden="true"
+            >
+              <source src="/videos/audition-bg.mp4" type="video/mp4" />
+            </video>
           </motion.div>
         </div>
       </div>
