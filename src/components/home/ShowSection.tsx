@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import showImg from "@/assets/show-stage.jpg";
+import showPoster from "@/assets/show-stage.jpg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -21,14 +21,17 @@ const ShowSection = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <img
-              src={showImg}
-              alt="Scène en action"
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={showPoster}
               className="rounded-lg w-full h-[400px] object-cover"
-              loading="lazy"
-              width={800}
-              height={600}
-            />
+              aria-hidden="true"
+            >
+              <source src="/videos/show-1.mp4" type="video/mp4" />
+            </video>
           </motion.div>
 
           <motion.div

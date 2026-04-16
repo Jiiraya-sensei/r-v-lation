@@ -16,6 +16,17 @@ const FinalCallSection = () => {
 
   return (
     <section className="py-24 bg-black-deep relative overflow-hidden">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-30"
+        aria-hidden="true"
+      >
+        <source src="/videos/final-bg.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-b from-black-deep/80 via-black-deep/70 to-black-deep" />
       <GoldParticles />
       <div className="container mx-auto px-4 relative z-10 text-center max-w-3xl">
         <motion.blockquote
