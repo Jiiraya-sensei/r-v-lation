@@ -1,0 +1,241 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import Layout from "@/components/Layout";
+import GoldParticles from "@/components/GoldParticles";
+import { EVENT_DATES } from "@/config/eventDates";
+
+const DISCIPLINES = ["singing", "dance", "instrument", "comedy", "theater", "circus", "other"] as const;
+
+const AuditionPage = () => {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as "fr" | "en";
+  const [videoMode, setVideoMode] = useState<"upload" | "link">("upload");
+  const [submitted, setSubmitted] = useState(false);
+  const [age, setAge] = useState("");
+  const [dragActive, setDragActive] = useState(false);
+
+  const isMinor = age !== "" && parseInt(age) >= 16 && parseInt(age) < 18;
+
+  if (submitted) {
+    return (
+      <Layout>
+        <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+          <GoldParticles />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative z-10 text-center max-w-lg mx-auto px-4"
+          >
+            <div className="text-6xl mb-6">✨</div>
+            <h2 className="font-display text-3xl text-gold-royal mb-4">{t("auditionPage.confirmTitle")}</h2>
+            <p className="text-cream/70 leading-relaxed">{t("auditionPage.confirmInfo")}</p>
+          </motion.div>
+        </section>
+      </Layout>
+    );
+  }
+
+  return (
+    <Layout>
+      {/* Steps */}
+      <section className="py-20 bg-black-deep">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <h1 className="font-display text-4xl md:text-5xl text-gold-royal text-center mb-4">
+              {t("auditionPage.title")}
+            </h1>
+            <p className="text-cream/70 text-center mb-12">{t("auditionPage.intro")}</p>
+          </motion.div>
+
+          {/* Timeline */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-center gap-4 md:gap-0 mb-16">
+            {[
+              { step: 1, title: t("auditionPage.step1"), sub: t("auditionPage.step1Deadline") },
+              { step: 2, title: t("auditionPage.step2"), sub: t("auditionPage.step2Date") },
+              { step: 3, title: t("auditionPage.step3"), sub: t("auditionPage.step3Date") },
+            ].map((s, i) => (
+              <div key={i} className="flex items-center">
+                {i > 0 && <div className="hidden md:block w-16 h-px bg-gold-royal/30" />}
+                <div className="text-center px-4">
+                  <div className="w-10 h-10 rounded-full gradient-gold text-black-deep font-bold flex items-center justify-center mx-auto mb-2">
+                    {s.step}
+                  </div>
+                  <div className="text-cream font-semibold text-sm">{s.title}</div>
+                  <div className="text-cream/50 text-xs mt-1">{s.sub}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Video guidelines */}
+          <div className="border border-gold-royal/40 rounded-lg p-6 mb-12 bg-gold-royal/5">
+            <h3 className="font-display text-xl text-gold-royal mb-4">{t("auditionPage.videoTitle")}</h3>
+            <ul className="space-y-2 text-cream/70 text-sm">
+              <li>• {t("auditionPage.videoDuration")}</li>
+              <li className="text-gold-light font-semibold bg-ruby-deep/20 rounded px-3 py-2">
+                ⚠️ {t("auditionPage.videoIntro")}
+              </li>
+              <li>• {t("auditionPage.videoOrientation")}</li>
+              <li>• {t("auditionPage.videoLighting")}</li>
+              <li>• {t("auditionPage.videoSound")}</li>
+              <li>• {t("auditionPage.videoFormat")}</li>
+              <li>• {t("auditionPage.videoSize")}</li>
+            </ul>
+          </div>
+
+          {/* Form */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSubmitted(true);
+            }}
+            className="space-y-6"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formFirstName")} *</label>
+                <input required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+              </div>
+              <div>
+                <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formLastName")} *</label>
+                <input required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+              </div>
+              <div>
+                <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formAge")} *</label>
+                <input
+                  type="number"
+                  min={16}
+                  required
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal"
+                />
+              </div>
+              <div>
+                <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formPhone")} *</label>
+                <input type="tel" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+              </div>
+              <div>
+                <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formEmail")} *</label>
+                <input type="email" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+              </div>
+              <div>
+                <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formDiscipline")} *</label>
+                <select required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal">
+                  <option value="">—</option>
+                  {DISCIPLINES.map((d) => (
+                    <option key={d} value={d}>{t(`auditionPage.disciplines.${d}`)}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formBio")}</label>
+              <textarea
+                maxLength={500}
+                rows={3}
+                className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal resize-none"
+              />
+            </div>
+
+            {/* Video mode toggle */}
+            <div>
+              <div className="flex gap-4 mb-4">
+                <button
+                  type="button"
+                  onClick={() => setVideoMode("upload")}
+                  className={`px-4 py-2 rounded-md text-sm font-semibold transition-colors ${
+                    videoMode === "upload"
+                      ? "gradient-gold text-black-deep"
+                      : "border border-gold-royal/30 text-cream/60 hover:text-gold-royal"
+                  }`}
+                >
+                  {t("auditionPage.uploadVideo")}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setVideoMode("link")}
+                  className={`px-4 py-2 rounded-md text-sm font-semibold transition-colors ${
+                    videoMode === "link"
+                      ? "gradient-gold text-black-deep"
+                      : "border border-gold-royal/30 text-cream/60 hover:text-gold-royal"
+                  }`}
+                >
+                  {t("auditionPage.pasteLink")}
+                </button>
+              </div>
+
+              {videoMode === "upload" ? (
+                <div
+                  onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
+                  onDragLeave={() => setDragActive(false)}
+                  onDrop={(e) => { e.preventDefault(); setDragActive(false); }}
+                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
+                    dragActive ? "border-gold-royal bg-gold-royal/5" : "border-gold-royal/20"
+                  }`}
+                >
+                  <p className="text-cream/50 text-sm">{t("auditionPage.uploadDrop")}</p>
+                  <input type="file" accept="video/mp4,video/quicktime,video/avi" className="hidden" />
+                </div>
+              ) : (
+                <input
+                  type="url"
+                  placeholder={t("auditionPage.linkPlaceholder")}
+                  className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal"
+                />
+              )}
+            </div>
+
+            {/* Consents */}
+            <div className="space-y-3">
+              <label className="flex items-start gap-3 text-cream/70 text-sm cursor-pointer">
+                <input type="checkbox" required className="mt-0.5 accent-gold-royal" />
+                <span>{t("auditionPage.consentTerms")}</span>
+              </label>
+              <label className="flex items-start gap-3 text-cream/70 text-sm cursor-pointer">
+                <input type="checkbox" required className="mt-0.5 accent-gold-royal" />
+                <span>{t("auditionPage.consentPrivacy")}</span>
+              </label>
+              <label className="flex items-start gap-3 text-cream/70 text-sm cursor-pointer">
+                <input type="checkbox" required className="mt-0.5 accent-gold-royal" />
+                <span>{t("auditionPage.consentVideo")}</span>
+              </label>
+            </div>
+
+            {/* Minor fields */}
+            {isMinor && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="border border-ruby-deep/30 rounded-lg p-4 bg-ruby-deep/5 space-y-4"
+              >
+                <p className="text-gold-light text-sm font-semibold">
+                  {lang === "fr" ? "Consentement parental requis (16-17 ans)" : "Parental consent required (ages 16-17)"}
+                </p>
+                <div>
+                  <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.parentName")} *</label>
+                  <input required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                </div>
+                <label className="flex items-start gap-3 text-cream/70 text-sm cursor-pointer">
+                  <input type="checkbox" required className="mt-0.5 accent-gold-royal" />
+                  <span>{t("auditionPage.parentConsent")}</span>
+                </label>
+              </motion.div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full gradient-gold text-black-deep font-bold py-3 rounded-md text-lg hover:opacity-90 transition-opacity gold-glow"
+            >
+              {t("auditionPage.submit")}
+            </button>
+          </form>
+        </div>
+      </section>
+    </Layout>
+  );
+};
+
+export default AuditionPage;
