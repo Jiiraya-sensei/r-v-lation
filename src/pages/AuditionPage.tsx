@@ -45,7 +45,14 @@ const AuditionPage = () => {
             <h1 className="font-display text-4xl md:text-5xl text-gold-royal text-center mb-4">
               {t("auditionPage.title")}
             </h1>
-            <p className="text-cream/70 text-center mb-12">{t("auditionPage.intro")}</p>
+            <p className="text-cream/70 text-center mb-6">{t("auditionPage.intro")}</p>
+            <div className="max-w-xl mx-auto mb-12 border border-gold-royal/20 rounded-lg p-4 bg-gold-royal/5 text-center">
+              <p className="text-gold-light text-sm font-medium">
+                {lang === "fr"
+                  ? "Participation réservée aux étudiants du Cégep Limoilou — Campus Charlesbourg, Campus Québec ou Campus Des Arts."
+                  : "Participation reserved for Cégep Limoilou students — Campus Charlesbourg, Campus Québec or Campus des Arts."}
+              </p>
+            </div>
           </motion.div>
 
           {/* Timeline */}
