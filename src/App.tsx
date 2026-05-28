@@ -5,12 +5,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "@/i18n";
 
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import AuditionPage from "./pages/AuditionPage";
-import TicketsPage from "./pages/TicketsPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import Index from "@/pages/Index";
+import NotFound from "@/pages/NotFound";
+import AuditionPage from "@/pages/AuditionPage";
+import TicketsPage from "@/pages/TicketsPage";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
 import AboutPage from "@/pages/AboutPage";
 import JuryPage from "@/pages/JuryPage";
 import FAQPage from "@/pages/FAQPage";
