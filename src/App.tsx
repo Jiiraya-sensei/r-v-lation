@@ -13,6 +13,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AboutPage from "./pages/AboutPage";
 import JuryPage from "./pages/JuryPage";
+import BoursesPage from "./pages/BoursesPage";
 import LegalPage from "./pages/LegalPage";
 
 const queryClient = new QueryClient();
