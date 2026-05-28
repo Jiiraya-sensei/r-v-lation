@@ -47,7 +47,7 @@ const AboutPage = () => {
       format: {
         title: "Le format",
         steps: [
-          { label: "Pré-audition vidéo", desc: "Soumission en ligne — accessible à tous les étudiants et artistes de la communauté élargie." },
+          { label: "Pré-audition vidéo", desc: "Soumission en ligne — réservée aux étudiants du Cégep Limoilou, peu importe le campus (Charlesbourg, Québec ou Des Arts)." },
           { label: "Auditions en personne", desc: `${EVENT_DATES.auditions.dayLabel.fr} · ${EVENT_DATES.auditions.time.fr} · Salle Montaigne, Campus Charlesbourg.` },
           { label: "Demi-finale", desc: `${EVENT_DATES.semifinal.dayLabel.fr} · ${EVENT_DATES.semifinal.time.fr} · Salle Sylvain-Lelièvre. Les meilleurs s'affrontent.` },
           { label: "Grande finale", desc: `${EVENT_DATES.finale.dayLabel.fr} · ${EVENT_DATES.finale.time.fr} · 677 spectateurs, jury professionnel, bourse de 1 000 $.` },
@@ -92,7 +92,7 @@ const AboutPage = () => {
       format: {
         title: "The format",
         steps: [
-          { label: "Online video pre-audition", desc: "Online submission — open to all students and artists from the wider community." },
+          { label: "Online video pre-audition", desc: "Online submission — exclusively for Cégep Limoilou students, any campus (Charlesbourg, Québec or Des Arts)." },
           { label: "In-person auditions", desc: `${EVENT_DATES.auditions.dayLabel.en} · ${EVENT_DATES.auditions.time.en} · Salle Montaigne, Campus Charlesbourg.` },
           { label: "Semifinal", desc: `${EVENT_DATES.semifinal.dayLabel.en} · ${EVENT_DATES.semifinal.time.en} · Salle Sylvain-Lelièvre. The best compete.` },
           { label: "Grand Finale", desc: `${EVENT_DATES.finale.dayLabel.en} · ${EVENT_DATES.finale.time.en} · 677 spectators, professional jury, $1,000 scholarship.` },
