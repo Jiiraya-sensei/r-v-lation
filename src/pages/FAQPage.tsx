@@ -21,7 +21,7 @@ const content = {
     items: [
       {
         q: "Qui peut participer à RÉVÉLATION ?",
-        a: "Tous les étudiants du Cégep Limoilou ainsi que les artistes de la communauté élargie. Aucune expérience professionnelle n'est requise.",
+        a: "Tous les étudiants du Cégep Limoilou, sur l'un des 3 campus : Campus Charlesbourg, Campus Québec ou Campus Des Arts. Aucune expérience professionnelle n'est requise.",
       },
       {
         q: "Quelles disciplines sont acceptées ?",
@@ -60,7 +60,7 @@ const content = {
     items: [
       {
         q: "Who can participate in RÉVÉLATION?",
-        a: "All Cégep Limoilou students as well as artists from the wider community. No professional experience is required.",
+        a: "All Cégep Limoilou students, across any of the 3 campuses: Campus Charlesbourg, Campus Québec, or Campus des Arts. No professional experience is required.",
       },
       {
         q: "What disciplines are accepted?",
