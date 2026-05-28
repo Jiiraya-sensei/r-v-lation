@@ -5,16 +5,17 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "@/i18n";
 
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import AuditionPage from "./pages/AuditionPage";
-import TicketsPage from "./pages/TicketsPage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import AboutPage from "./pages/AboutPage";
-import JuryPage from "./pages/JuryPage";
-import BoursesPage from "./pages/BoursesPage";
-import LegalPage from "./pages/LegalPage";
+import Index from "@/pages/Index";
+import NotFound from "@/pages/NotFound";
+import AuditionPage from "@/pages/AuditionPage";
+import TicketsPage from "@/pages/TicketsPage";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
+import AboutPage from "@/pages/AboutPage";
+import JuryPage from "@/pages/JuryPage";
+import FAQPage from "@/pages/FAQPage";
+import BoursesPage from "@/pages/BoursesPage";
+import LegalPage from "@/pages/LegalPage";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/inscription" element={<RegisterPage />} />
           <Route path="/a-propos" element={<AboutPage />} />
           <Route path="/jury" element={<JuryPage />} />
+          <Route path="/faq" element={<FAQPage />} />
           <Route path="/bourses" element={<BoursesPage />} />
           <Route path="/conditions-generales" element={<LegalPage type="terms" />} />
           <Route path="/confidentialite" element={<LegalPage type="privacy" />} />
