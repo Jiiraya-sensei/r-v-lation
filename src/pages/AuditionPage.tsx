@@ -281,11 +281,13 @@ const AuditionPage = () => {
                 </div>
               ) : (
                 <input
+                  name="video_link"
                   type="url"
                   placeholder={t("auditionPage.linkPlaceholder")}
                   className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal"
                 />
               )}
+
             </div>
 
             {/* Consents */}
