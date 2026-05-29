@@ -6,6 +6,7 @@ import GoldParticles from "@/components/GoldParticles";
 import { EVENT_DATES } from "@/config/eventDates";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { uploadResumable } from "@/lib/uploadResumable";
 
 const DISCIPLINES = ["singing", "dance", "instrument", "comedy", "theater", "circus", "other"] as const;
 
@@ -15,6 +16,7 @@ const AuditionPage = () => {
   const [videoMode, setVideoMode] = useState<"upload" | "link">("upload");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [age, setAge] = useState("");
   const [dragActive, setDragActive] = useState(false);
   const [videoFile, setVideoFile] = useState<File | null>(null);
@@ -47,10 +49,15 @@ const AuditionPage = () => {
         const ext = videoFile.name.split(".").pop() || "mp4";
         const safe = `${first_name}-${last_name}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
         const path = `${safe}-${Date.now()}.${ext}`;
-        const { error: upErr } = await supabase.storage
-          .from("audition-videos")
-          .upload(path, videoFile, { contentType: videoFile.type, upsert: false });
-        if (upErr) throw upErr;
+        setUploadProgress(0);
+        // Resumable upload: supports multi-GB 4K files, auto-retries on flaky networks.
+        await uploadResumable({
+          bucket: "audition-videos",
+          path,
+          file: videoFile,
+          onProgress: (pct) => setUploadProgress(pct),
+        });
+        setUploadProgress(null);
         video_path = path;
       }
 
