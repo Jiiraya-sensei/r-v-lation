@@ -27,6 +27,8 @@ export type Database = {
           parent_consent: boolean | null
           parent_name: string | null
           phone: string
+          status: string
+          user_id: string | null
           video_link: string | null
           video_path: string | null
         }
@@ -42,6 +44,8 @@ export type Database = {
           parent_consent?: boolean | null
           parent_name?: string | null
           phone: string
+          status?: string
+          user_id?: string | null
           video_link?: string | null
           video_path?: string | null
         }
@@ -57,10 +61,134 @@ export type Database = {
           parent_consent?: boolean | null
           parent_name?: string | null
           phone?: string
+          status?: string
+          user_id?: string | null
           video_link?: string | null
           video_path?: string | null
         }
         Relationships: []
+      }
+      orders: {
+        Row: {
+          created_at: string
+          currency: string
+          customer_email: string
+          customer_name: string | null
+          environment: string
+          id: string
+          status: string
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string
+          total_amount: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          customer_email: string
+          customer_name?: string | null
+          environment?: string
+          id?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id: string
+          total_amount: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          customer_email?: string
+          customer_name?: string | null
+          environment?: string
+          id?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string
+          total_amount?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          account_type: string
+          age: number | null
+          created_at: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          account_type?: string
+          age?: number | null
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          account_type?: string
+          age?: number | null
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tickets: {
+        Row: {
+          created_at: string
+          holder_email: string
+          id: string
+          order_id: string
+          pdf_path: string | null
+          ticket_type: string
+          token: string
+          used_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          holder_email: string
+          id?: string
+          order_id: string
+          pdf_path?: string | null
+          ticket_type: string
+          token?: string
+          used_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          holder_email?: string
+          id?: string
+          order_id?: string
+          pdf_path?: string | null
+          ticket_type?: string
+          token?: string
+          used_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tickets_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
