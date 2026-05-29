@@ -33,6 +33,8 @@ const Navbar = () => {
   const mobileLinks = [
     { to: "/", label: t("nav.home") },
     { to: "/a-propos", label: t("nav.about") },
+    { to: "/jury", label: t("nav.jury") },
+    { to: "/bourses", label: t("nav.scholarships") },
     { to: "/auditionner", label: t("nav.audition") },
     { to: "/billetterie", label: t("nav.tickets") },
     { to: "/faq", label: t("nav.faq") },
