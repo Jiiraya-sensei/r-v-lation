@@ -201,6 +201,7 @@ const JuryPage = lazy(() => import("@/pages/JuryPage"));
 const FAQPage = lazy(() => import("@/pages/FAQPage"));
 const BoursesPage = lazy(() => import("@/pages/BoursesPage"));
 const LegalPage = lazy(() => import("@/pages/LegalPage"));
+const UnsubscribePage = lazy(() => import("@/pages/UnsubscribePage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -238,6 +239,7 @@ const App = () => (
               <Route path="/conditions-generales" element={<LegalPage type="terms" />} />
               <Route path="/confidentialite" element={<LegalPage type="privacy" />} />
               <Route path="/utilisation-videos" element={<LegalPage type="video" />} />
+              <Route path="/unsubscribe" element={<UnsubscribePage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

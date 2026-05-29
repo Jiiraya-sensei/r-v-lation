@@ -210,13 +210,18 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
     }
   }
 
-  // Send confirmation email with PDFs attached via Lovable's transactional system.
-  // If `send-transactional-email` is not deployed yet, skip silently — the order/tickets are saved.
+  // Send confirmation email with signed download links to each ticket PDF.
   try {
-    const attachments = pdfPaths.map((p) => ({
-      filename: `billet-${p.ticketId.slice(0, 8)}.pdf`,
-      content: btoa(String.fromCharCode(...p.bytes)),
-    }));
+    const tickets = [];
+    for (const p of pdfPaths) {
+      const { data: signed } = await supabase.storage
+        .from("tickets-pdf")
+        .createSignedUrl(p.path, 60 * 60 * 24 * 30); // 30 days
+      if (signed?.signedUrl) {
+        tickets.push({ type: p.ticketType, url: signed.signedUrl });
+      }
+    }
+    const totalLabel = `${(session.amount_total ?? 0) / 100} ${(session.currency ?? "cad").toUpperCase()}`;
     const url = `${Deno.env.get("SUPABASE_URL")}/functions/v1/send-transactional-email`;
     await fetch(url, {
       method: "POST",
@@ -225,17 +230,19 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
         Authorization: `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`,
       },
       body: JSON.stringify({
-        to: customerEmail,
-        templateName: "ticket_confirmation",
+        templateName: "ticket-confirmation",
+        recipientEmail: customerEmail,
+        idempotencyKey: `ticket-confirm-${session.id}`,
         templateData: {
-          customerName: customerName || customerEmail,
-          ticketCount: pdfPaths.length,
+          customerName: customerName || null,
+          orderId: order.id,
+          totalLabel,
+          tickets,
         },
-        attachments,
       }),
     });
   } catch (e) {
-    console.warn("Email send skipped (transactional system not configured yet):", e);
+    console.warn("Email send skipped:", e);
   }
 }
 
