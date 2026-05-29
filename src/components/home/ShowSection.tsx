@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import VideoBackground from "@/components/VideoBackground";
-import showPoster from "@/assets/show-stage.jpg";
+import showPoster from "@/assets/show-stage.webp";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
