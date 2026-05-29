@@ -62,9 +62,7 @@ const Footer = () => {
             <div>
               <h3 className="font-display text-2xl text-gold-royal tracking-[0.15em] mb-3">RÉVÉLATION</h3>
               <p className="text-cream/50 text-sm leading-relaxed">
-                {lang === "fr"
-                  ? "Le gala de talents étudiant du Cégep Limoilou. Automne 2026."
-                  : "Cégep Limoilou's Student Talent Gala. Fall 2026."}
+                Le gala de talents étudiant du Cégep Limoilou. Automne 2026.
               </p>
             </div>
 
