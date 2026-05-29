@@ -7,16 +7,73 @@ import { EVENT_DATES } from "@/config/eventDates";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
+const DISCIPLINES = ["singing", "dance", "instrument", "comedy", "theater", "circus", "other"] as const;
 
 const AuditionPage = () => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language as "fr" | "en";
   const [videoMode, setVideoMode] = useState<"upload" | "link">("upload");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [age, setAge] = useState("");
   const [dragActive, setDragActive] = useState(false);
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
+    try {
+      const fd = new FormData(e.currentTarget);
+      const first_name = String(fd.get("first_name") || "").trim();
+      const last_name = String(fd.get("last_name") || "").trim();
+      const ageNum = parseInt(String(fd.get("age") || "0"), 10);
+      const phone = String(fd.get("phone") || "").trim();
+      const email = String(fd.get("email") || "").trim();
+      const discipline = String(fd.get("discipline") || "");
+      const bio = String(fd.get("bio") || "").trim() || null;
+      const video_link = videoMode === "link" ? String(fd.get("video_link") || "").trim() || null : null;
+      const parent_name = isMinor ? String(fd.get("parent_name") || "").trim() : null;
+      const parent_consent = isMinor;
+
+      let video_path: string | null = null;
+      if (videoMode === "upload") {
+        if (!videoFile) {
+          toast({ title: lang === "fr" ? "Vidéo manquante" : "Video missing", description: lang === "fr" ? "Téléverse une vidéo ou colle un lien." : "Upload a video or paste a link.", variant: "destructive" });
+          setSubmitting(false);
+          return;
+        }
+        const ext = videoFile.name.split(".").pop() || "mp4";
+        const safe = `${first_name}-${last_name}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        const path = `${safe}-${Date.now()}.${ext}`;
+        const { error: upErr } = await supabase.storage
+          .from("audition-videos")
+          .upload(path, videoFile, { contentType: videoFile.type, upsert: false });
+        if (upErr) throw upErr;
+        video_path = path;
+      }
+
+      const { error: insErr } = await supabase.from("audition_submissions").insert({
+        first_name, last_name, age: ageNum, phone, email, discipline,
+        bio, video_path, video_link, parent_name, parent_consent,
+      });
+      if (insErr) throw insErr;
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error(err);
+      toast({
+        title: lang === "fr" ? "Erreur d'envoi" : "Submission error",
+        description: err?.message || (lang === "fr" ? "Réessaie dans un instant." : "Please try again."),
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+
 
   const handleFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
