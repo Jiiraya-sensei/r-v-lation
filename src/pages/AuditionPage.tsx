@@ -318,7 +318,8 @@ const AuditionPage = () => {
                 </p>
                 <div>
                   <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.parentName")} *</label>
-                  <input required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                  <input name="parent_name" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+
                 </div>
                 <label className="flex items-start gap-3 text-cream/70 text-sm cursor-pointer">
                   <input type="checkbox" required className="mt-0.5 accent-gold-royal" />
