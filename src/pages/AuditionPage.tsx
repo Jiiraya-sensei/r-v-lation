@@ -6,6 +6,7 @@ import GoldParticles from "@/components/GoldParticles";
 import { EVENT_DATES } from "@/config/eventDates";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { uploadResumable } from "@/lib/uploadResumable";
 
 const DISCIPLINES = ["singing", "dance", "instrument", "comedy", "theater", "circus", "other"] as const;
 
@@ -15,6 +16,7 @@ const AuditionPage = () => {
   const [videoMode, setVideoMode] = useState<"upload" | "link">("upload");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [age, setAge] = useState("");
   const [dragActive, setDragActive] = useState(false);
   const [videoFile, setVideoFile] = useState<File | null>(null);
@@ -47,10 +49,15 @@ const AuditionPage = () => {
         const ext = videoFile.name.split(".").pop() || "mp4";
         const safe = `${first_name}-${last_name}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
         const path = `${safe}-${Date.now()}.${ext}`;
-        const { error: upErr } = await supabase.storage
-          .from("audition-videos")
-          .upload(path, videoFile, { contentType: videoFile.type, upsert: false });
-        if (upErr) throw upErr;
+        setUploadProgress(0);
+        // Resumable upload: supports multi-GB 4K files, auto-retries on flaky networks.
+        await uploadResumable({
+          bucket: "audition-videos",
+          path,
+          file: videoFile,
+          onProgress: (pct) => setUploadProgress(pct),
+        });
+        setUploadProgress(null);
         video_path = path;
       }
 
@@ -70,6 +77,7 @@ const AuditionPage = () => {
       });
     } finally {
       setSubmitting(false);
+      setUploadProgress(null);
     }
   };
 
@@ -328,13 +336,32 @@ const AuditionPage = () => {
               </motion.div>
             )}
 
+            {uploadProgress !== null && (
+              <div className="space-y-2" aria-live="polite">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-black-warm">
+                  <div
+                    className="h-full gradient-gold transition-all duration-200"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+                <p className="text-cream/60 text-xs text-center">
+                  {lang === "fr" ? "Téléversement" : "Uploading"} · {uploadProgress}%
+                </p>
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={submitting}
               className="w-full gradient-gold text-black-deep font-bold py-3 rounded-md text-lg hover:opacity-90 transition-opacity gold-glow disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {submitting ? (lang === "fr" ? "Envoi en cours…" : "Submitting…") : t("auditionPage.submit")}
+              {submitting
+                ? uploadProgress !== null
+                  ? (lang === "fr" ? `Téléversement ${uploadProgress}%…` : `Uploading ${uploadProgress}%…`)
+                  : (lang === "fr" ? "Envoi en cours…" : "Submitting…")
+                : t("auditionPage.submit")}
             </button>
+
 
           </form>
         </div>
