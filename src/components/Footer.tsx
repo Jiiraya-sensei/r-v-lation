@@ -36,7 +36,7 @@ const Footer = () => {
           <div className="flex items-center justify-center gap-2 mb-6">
             <Calendar className="text-gold-royal" size={20} />
             <h4 className="text-gold-royal font-display text-lg tracking-wider uppercase">
-              {lang === "fr" ? "Dates des événements 2026" : "2026 Event Dates"}
+              Dates des événements 2026
             </h4>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
