@@ -188,6 +188,7 @@ import Index from "@/pages/Index"; // landing eager (LCP)
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const AuditionPage = lazy(() => import("@/pages/AuditionPage"));
 const TicketsPage = lazy(() => import("@/pages/TicketsPage"));
+const CheckoutReturn = lazy(() => import("@/pages/CheckoutReturn"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
 const AboutPage = lazy(() => import("@/pages/AboutPage"));
@@ -218,6 +219,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auditionner" element={<AuditionPage />} />
             <Route path="/billetterie" element={<TicketsPage />} />
+            <Route path="/billetterie/confirmation" element={<CheckoutReturn />} />
             <Route path="/connexion" element={<LoginPage />} />
             <Route path="/inscription" element={<RegisterPage />} />
             <Route path="/a-propos" element={<AboutPage />} />
