@@ -330,10 +330,12 @@ const AuditionPage = () => {
 
             <button
               type="submit"
-              className="w-full gradient-gold text-black-deep font-bold py-3 rounded-md text-lg hover:opacity-90 transition-opacity gold-glow"
+              disabled={submitting}
+              className="w-full gradient-gold text-black-deep font-bold py-3 rounded-md text-lg hover:opacity-90 transition-opacity gold-glow disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {t("auditionPage.submit")}
+              {submitting ? (lang === "fr" ? "Envoi en cours…" : "Submitting…") : t("auditionPage.submit")}
             </button>
+
           </form>
         </div>
       </section>
