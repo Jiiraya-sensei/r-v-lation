@@ -7,6 +7,7 @@ import { EVENT_DATES } from "@/config/eventDates";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { uploadResumable } from "@/lib/uploadResumable";
+import { useAuth } from "@/hooks/useAuth";
 
 const DISCIPLINES = ["singing", "dance", "instrument", "comedy", "theater", "circus", "other"] as const;
 
