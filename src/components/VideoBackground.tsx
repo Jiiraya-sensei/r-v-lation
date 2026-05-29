@@ -79,6 +79,7 @@ const VideoBackground = ({ src, mobileSrc, poster, className, alt = "", heavy = 
 
   return (
     <video
+      key={activeSrc}
       ref={(el) => { elRef.current = el; }}
       autoPlay
       loop
