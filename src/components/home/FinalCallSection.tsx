@@ -21,6 +21,7 @@ const FinalCallSection = () => {
       <VideoBackground
         heavy
         src="/videos/final-bg.mp4"
+        mobileSrc="/videos/mobile-2.mp4"
         poster={heroPoster}
         className="absolute inset-0 w-full h-full object-cover opacity-30"
       />

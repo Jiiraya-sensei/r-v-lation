@@ -25,6 +25,7 @@ const ShowSection = () => {
             <VideoBackground
               heavy
               src="/videos/show-1.mp4"
+              mobileSrc="/videos/mobile-1.mp4"
               poster={showPoster}
               alt={t("alt.showStage")}
               className="rounded-lg w-full h-[400px] object-cover"

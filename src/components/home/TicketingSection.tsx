@@ -20,6 +20,7 @@ const TicketingSection = () => {
           >
             <VideoBackground
               src="/videos/ticket-bg.mp4"
+              mobileSrc="/videos/mobile-1.mp4"
               poster={audiencePoster}
               alt={t("alt.audience")}
               className="rounded-lg w-full h-[350px] object-cover"
