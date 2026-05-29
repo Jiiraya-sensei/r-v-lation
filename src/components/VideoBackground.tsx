@@ -3,6 +3,8 @@ import { useVideoBackground } from "@/hooks/useVideoBackground";
 
 interface VideoBackgroundProps {
   src: string;
+  /** Optional mobile-specific video source (used when viewport < 768px) */
+  mobileSrc?: string;
   poster: string;
   className?: string;
   alt?: string;
@@ -17,11 +19,12 @@ interface VideoBackgroundProps {
  * - The poster image acts as the sentinel while shouldLoad is false, so the
  *   element is laid out (positioning, sizing) exactly like the final <video>.
  */
-const VideoBackground = ({ src, poster, className, alt = "", heavy = false }: VideoBackgroundProps) => {
+const VideoBackground = ({ src, mobileSrc, poster, className, alt = "", heavy = false }: VideoBackgroundProps) => {
   const { enabled, isMobile } = useVideoBackground();
   const elRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
 
+  const activeSrc = isMobile && mobileSrc ? mobileSrc : src;
   const useVideo = enabled && !(heavy && isMobile);
 
   // Observe whichever element is currently mounted (poster placeholder, then video).
@@ -86,7 +89,7 @@ const VideoBackground = ({ src, poster, className, alt = "", heavy = false }: Vi
       className={className}
       aria-hidden="true"
     >
-      <source src={src} type="video/mp4" />
+      <source src={activeSrc} type="video/mp4" />
     </video>
   );
 };
