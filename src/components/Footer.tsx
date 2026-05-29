@@ -82,7 +82,7 @@ const Footer = () => {
             {/* Legal + Social */}
             <div>
               <h4 className="text-gold-royal font-semibold text-sm mb-3 uppercase tracking-wider">
-                {lang === "fr" ? "Liens utiles" : "Useful Links"}
+                Liens utiles
               </h4>
               <ul className="space-y-2 text-cream/60 text-sm">
                 <li><Link to="/conditions-generales" className="hover:text-gold-royal transition-colors">{t("footer.terms")}</Link></li>
