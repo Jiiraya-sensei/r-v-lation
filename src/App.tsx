@@ -201,6 +201,7 @@ const JuryPage = lazy(() => import("@/pages/JuryPage"));
 const FAQPage = lazy(() => import("@/pages/FAQPage"));
 const BoursesPage = lazy(() => import("@/pages/BoursesPage"));
 const LegalPage = lazy(() => import("@/pages/LegalPage"));
+const UnsubscribePage = lazy(() => import("@/pages/UnsubscribePage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
