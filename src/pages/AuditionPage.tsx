@@ -13,6 +13,7 @@ const DISCIPLINES = ["singing", "dance", "instrument", "comedy", "theater", "cir
 
 const AuditionPage = () => {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
   const lang = i18n.language as "fr" | "en";
   const [videoMode, setVideoMode] = useState<"upload" | "link">("upload");
   const [submitted, setSubmitted] = useState(false);
