@@ -184,6 +184,7 @@ const DocumentLang = () => {
 
 
 import Index from "@/pages/Index"; // landing eager (LCP)
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 // Route-level code-splitting: every other page loads on demand.
 const NotFound = lazy(() => import("@/pages/NotFound"));
@@ -192,6 +193,9 @@ const TicketsPage = lazy(() => import("@/pages/TicketsPage"));
 const CheckoutReturn = lazy(() => import("@/pages/CheckoutReturn"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
+const ForgotPasswordPage = lazy(() => import("@/pages/ForgotPasswordPage"));
+const ResetPasswordPage = lazy(() => import("@/pages/ResetPasswordPage"));
+const AccountPage = lazy(() => import("@/pages/AccountPage"));
 const AboutPage = lazy(() => import("@/pages/AboutPage"));
 const JuryPage = lazy(() => import("@/pages/JuryPage"));
 const FAQPage = lazy(() => import("@/pages/FAQPage"));
