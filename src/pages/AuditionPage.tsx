@@ -159,25 +159,20 @@ const AuditionPage = () => {
           </div>
 
           {/* Form */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
-            className="space-y-6"
-          >
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formFirstName")} *</label>
-                <input required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                <input name="first_name" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formLastName")} *</label>
-                <input required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                <input name="last_name" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formAge")} *</label>
                 <input
+                  name="age"
                   type="number"
                   min={16}
                   required
@@ -188,15 +183,15 @@ const AuditionPage = () => {
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formPhone")} *</label>
-                <input type="tel" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                <input name="phone" type="tel" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formEmail")} *</label>
-                <input type="email" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                <input name="email" type="email" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formDiscipline")} *</label>
-                <select required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal">
+                <select name="discipline" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal">
                   <option value="">—</option>
                   {DISCIPLINES.map((d) => (
                     <option key={d} value={d}>{t(`auditionPage.disciplines.${d}`)}</option>
@@ -204,6 +199,7 @@ const AuditionPage = () => {
                 </select>
               </div>
             </div>
+
 
             <div>
               <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formBio")}</label>
