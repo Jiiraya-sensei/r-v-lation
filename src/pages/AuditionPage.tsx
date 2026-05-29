@@ -7,11 +7,13 @@ import { EVENT_DATES } from "@/config/eventDates";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { uploadResumable } from "@/lib/uploadResumable";
+import { useAuth } from "@/hooks/useAuth";
 
 const DISCIPLINES = ["singing", "dance", "instrument", "comedy", "theater", "circus", "other"] as const;
 
 const AuditionPage = () => {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
   const lang = i18n.language as "fr" | "en";
   const [videoMode, setVideoMode] = useState<"upload" | "link">("upload");
   const [submitted, setSubmitted] = useState(false);
@@ -64,6 +66,7 @@ const AuditionPage = () => {
       const { error: insErr } = await supabase.from("audition_submissions").insert({
         first_name, last_name, age: ageNum, phone, email, discipline,
         bio, video_path, video_link, parent_name, parent_consent,
+        user_id: user?.id ?? null,
       });
       if (insErr) throw insErr;
 

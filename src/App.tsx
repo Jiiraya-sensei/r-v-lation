@@ -184,6 +184,7 @@ const DocumentLang = () => {
 
 
 import Index from "@/pages/Index"; // landing eager (LCP)
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 // Route-level code-splitting: every other page loads on demand.
 const NotFound = lazy(() => import("@/pages/NotFound"));
@@ -192,6 +193,9 @@ const TicketsPage = lazy(() => import("@/pages/TicketsPage"));
 const CheckoutReturn = lazy(() => import("@/pages/CheckoutReturn"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
+const ForgotPasswordPage = lazy(() => import("@/pages/ForgotPasswordPage"));
+const ResetPasswordPage = lazy(() => import("@/pages/ResetPasswordPage"));
+const AccountPage = lazy(() => import("@/pages/AccountPage"));
 const AboutPage = lazy(() => import("@/pages/AboutPage"));
 const JuryPage = lazy(() => import("@/pages/JuryPage"));
 const FAQPage = lazy(() => import("@/pages/FAQPage"));
@@ -219,11 +223,14 @@ const App = () => (
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/auditionner" element={<AuditionPage />} />
+              <Route path="/auditionner" element={<ProtectedRoute><AuditionPage /></ProtectedRoute>} />
               <Route path="/billetterie" element={<TicketsPage />} />
               <Route path="/billetterie/confirmation" element={<CheckoutReturn />} />
               <Route path="/connexion" element={<LoginPage />} />
               <Route path="/inscription" element={<RegisterPage />} />
+              <Route path="/mot-de-passe-oublie" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/mon-compte" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
               <Route path="/a-propos" element={<AboutPage />} />
               <Route path="/jury" element={<JuryPage />} />
               <Route path="/faq" element={<FAQPage />} />
