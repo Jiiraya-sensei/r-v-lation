@@ -36,7 +36,7 @@ const Footer = () => {
           <div className="flex items-center justify-center gap-2 mb-6">
             <Calendar className="text-gold-royal" size={20} />
             <h4 className="text-gold-royal font-display text-lg tracking-wider uppercase">
-              {lang === "fr" ? "Dates des événements 2026" : "2026 Event Dates"}
+              Dates des événements 2026
             </h4>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
@@ -62,9 +62,7 @@ const Footer = () => {
             <div>
               <h3 className="font-display text-2xl text-gold-royal tracking-[0.15em] mb-3">RÉVÉLATION</h3>
               <p className="text-cream/50 text-sm leading-relaxed">
-                {lang === "fr"
-                  ? "Le gala de talents étudiant du Cégep Limoilou. Automne 2026."
-                  : "Cégep Limoilou's Student Talent Gala. Fall 2026."}
+                Le gala de talents étudiant du Cégep Limoilou. Automne 2026.
               </p>
             </div>
 
@@ -84,7 +82,7 @@ const Footer = () => {
             {/* Legal + Social */}
             <div>
               <h4 className="text-gold-royal font-semibold text-sm mb-3 uppercase tracking-wider">
-                {lang === "fr" ? "Liens utiles" : "Useful Links"}
+                Liens utiles
               </h4>
               <ul className="space-y-2 text-cream/60 text-sm">
                 <li><Link to="/conditions-generales" className="hover:text-gold-royal transition-colors">{t("footer.terms")}</Link></li>
