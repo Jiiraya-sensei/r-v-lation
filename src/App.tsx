@@ -223,11 +223,14 @@ const App = () => (
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/auditionner" element={<AuditionPage />} />
+              <Route path="/auditionner" element={<ProtectedRoute><AuditionPage /></ProtectedRoute>} />
               <Route path="/billetterie" element={<TicketsPage />} />
               <Route path="/billetterie/confirmation" element={<CheckoutReturn />} />
               <Route path="/connexion" element={<LoginPage />} />
               <Route path="/inscription" element={<RegisterPage />} />
+              <Route path="/mot-de-passe-oublie" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/mon-compte" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
               <Route path="/a-propos" element={<AboutPage />} />
               <Route path="/jury" element={<JuryPage />} />
               <Route path="/faq" element={<FAQPage />} />
