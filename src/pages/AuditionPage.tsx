@@ -77,6 +77,7 @@ const AuditionPage = () => {
       });
     } finally {
       setSubmitting(false);
+      setUploadProgress(null);
     }
   };
 
