@@ -187,7 +187,38 @@ const JuryPage = () => {
 
   return (
     <Layout>
+      {/* HERO VIDÉO PLEIN ÉCRAN */}
+      <section className="relative h-[100svh] w-full overflow-hidden bg-black-deep">
+        <VideoBackground
+          src="/videos/jury-stage.mp4"
+          poster="/videos/jury-stage-poster.jpg"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Voile pour lisibilité + transition vers la section suivante */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black-deep/40 via-transparent to-black-deep" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black-deep to-transparent" />
+
+        {/* Indicateur de défilement */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        >
+          <span className="text-gold-royal/80 font-display text-xs tracking-[0.3em] uppercase">
+            {lang === "fr" ? "Découvrir" : "Discover"}
+          </span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            className="w-px h-10 bg-gradient-to-b from-gold-royal to-transparent"
+          />
+        </motion.div>
+      </section>
+
       {/* HERO THÉÂTRAL */}
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-black-deep">
+
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-black-deep">
         <VideoBackground
           src="/videos/jury-stage.mp4"
