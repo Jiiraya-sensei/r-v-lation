@@ -99,7 +99,7 @@ const HeroSection = () => {
           transition={{ delay: 1.5 }}
           className="mt-16"
         >
-          <ChevronDown className="mx-auto text-gold-royal/60 animate-bounce-subtle" size={32} />
+          <ChevronDown aria-hidden="true" className="mx-auto text-gold-royal/60 animate-bounce-subtle" size={32} />
         </motion.div>
       </div>
     </section>

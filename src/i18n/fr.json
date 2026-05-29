@@ -122,7 +122,9 @@
     "quantity": "Nombre de billets",
     "total": "Total",
     "checkout": "Passer au paiement",
-    "comingSoon": "Ouverture prochaine"
+    "comingSoon": "Ouverture prochaine",
+    "pricingHeading": "Nos tarifs",
+    "selectionHeading": "Sélection des billets"
   },
   "footer": {
     "rights": "© 2026 RÉVÉLATION. Tous droits réservés.",

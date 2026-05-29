@@ -122,7 +122,9 @@
     "quantity": "Number of tickets",
     "total": "Total",
     "checkout": "Proceed to payment",
-    "comingSoon": "Coming soon"
+    "comingSoon": "Coming soon",
+    "pricingHeading": "Our prices",
+    "selectionHeading": "Ticket selection"
   },
   "footer": {
     "rights": "© 2026 RÉVÉLATION. All rights reserved.",
