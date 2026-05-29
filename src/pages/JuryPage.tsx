@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import GoldParticles from "@/components/GoldParticles";
 import VideoBackground from "@/components/VideoBackground";
+import juryMysteryBg from "@/assets/jury-mystery-bg.jpg";
 
 
 const fadeUp = {
@@ -112,14 +113,18 @@ const MaskedSilhouette = ({
 
   return (
     <motion.div
-      className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer bg-gradient-to-b border border-gold-royal/20"
-      style={{ backgroundImage: `linear-gradient(to bottom, var(--tw-gradient-stops))` }}
+      className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer border border-gold-royal/20"
+      style={{
+        backgroundImage: `url(${juryMysteryBg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       whileHover={{ scale: 1.04 }}
       transition={{ type: "spring", stiffness: 280, damping: 20 }}
     >
-      <div className={`absolute inset-0 bg-gradient-to-b ${tints[index]} opacity-60`} />
+      <div className={`absolute inset-0 bg-gradient-to-b ${tints[index]} opacity-50 mix-blend-multiply`} />
 
       {/* SVG silhouette floue */}
       <svg
