@@ -336,13 +336,32 @@ const AuditionPage = () => {
               </motion.div>
             )}
 
+            {uploadProgress !== null && (
+              <div className="space-y-2" aria-live="polite">
+                <div className="h-2 w-full overflow-hidden rounded-full bg-black-warm">
+                  <div
+                    className="h-full gradient-gold transition-all duration-200"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+                <p className="text-cream/60 text-xs text-center">
+                  {lang === "fr" ? "Téléversement" : "Uploading"} · {uploadProgress}%
+                </p>
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={submitting}
               className="w-full gradient-gold text-black-deep font-bold py-3 rounded-md text-lg hover:opacity-90 transition-opacity gold-glow disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {submitting ? (lang === "fr" ? "Envoi en cours…" : "Submitting…") : t("auditionPage.submit")}
+              {submitting
+                ? uploadProgress !== null
+                  ? (lang === "fr" ? `Téléversement ${uploadProgress}%…` : `Uploading ${uploadProgress}%…`)
+                  : (lang === "fr" ? "Envoi en cours…" : "Submitting…")
+                : t("auditionPage.submit")}
             </button>
+
 
           </form>
         </div>
