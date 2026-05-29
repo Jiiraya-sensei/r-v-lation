@@ -219,7 +219,6 @@ const JuryPage = () => {
       {/* HERO THÉÂTRAL */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-black-deep">
         <GoldParticles className="opacity-30" />
-        <GoldParticles className="opacity-30" />
 
         {/* Rideaux latéraux */}
         <div className="absolute inset-y-0 left-0 w-12 md:w-24 bg-gradient-to-r from-ruby-deep/30 to-transparent" />
