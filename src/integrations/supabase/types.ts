@@ -14,7 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audition_submissions: {
+        Row: {
+          age: number
+          bio: string | null
+          created_at: string
+          discipline: string
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          parent_consent: boolean | null
+          parent_name: string | null
+          phone: string
+          video_link: string | null
+          video_path: string | null
+        }
+        Insert: {
+          age: number
+          bio?: string | null
+          created_at?: string
+          discipline: string
+          email: string
+          first_name: string
+          id?: string
+          last_name: string
+          parent_consent?: boolean | null
+          parent_name?: string | null
+          phone: string
+          video_link?: string | null
+          video_path?: string | null
+        }
+        Update: {
+          age?: number
+          bio?: string | null
+          created_at?: string
+          discipline?: string
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          parent_consent?: boolean | null
+          parent_name?: string | null
+          phone?: string
+          video_link?: string | null
+          video_path?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

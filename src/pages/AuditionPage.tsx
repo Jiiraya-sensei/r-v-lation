@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import GoldParticles from "@/components/GoldParticles";
 import { EVENT_DATES } from "@/config/eventDates";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const DISCIPLINES = ["singing", "dance", "instrument", "comedy", "theater", "circus", "other"] as const;
 
@@ -12,10 +14,66 @@ const AuditionPage = () => {
   const lang = i18n.language as "fr" | "en";
   const [videoMode, setVideoMode] = useState<"upload" | "link">("upload");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [age, setAge] = useState("");
   const [dragActive, setDragActive] = useState(false);
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
+    try {
+      const fd = new FormData(e.currentTarget);
+      const first_name = String(fd.get("first_name") || "").trim();
+      const last_name = String(fd.get("last_name") || "").trim();
+      const ageNum = parseInt(String(fd.get("age") || "0"), 10);
+      const phone = String(fd.get("phone") || "").trim();
+      const email = String(fd.get("email") || "").trim();
+      const discipline = String(fd.get("discipline") || "");
+      const bio = String(fd.get("bio") || "").trim() || null;
+      const video_link = videoMode === "link" ? String(fd.get("video_link") || "").trim() || null : null;
+      const parent_name = isMinor ? String(fd.get("parent_name") || "").trim() : null;
+      const parent_consent = isMinor;
+
+      let video_path: string | null = null;
+      if (videoMode === "upload") {
+        if (!videoFile) {
+          toast({ title: lang === "fr" ? "Vidéo manquante" : "Video missing", description: lang === "fr" ? "Téléverse une vidéo ou colle un lien." : "Upload a video or paste a link.", variant: "destructive" });
+          setSubmitting(false);
+          return;
+        }
+        const ext = videoFile.name.split(".").pop() || "mp4";
+        const safe = `${first_name}-${last_name}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        const path = `${safe}-${Date.now()}.${ext}`;
+        const { error: upErr } = await supabase.storage
+          .from("audition-videos")
+          .upload(path, videoFile, { contentType: videoFile.type, upsert: false });
+        if (upErr) throw upErr;
+        video_path = path;
+      }
+
+      const { error: insErr } = await supabase.from("audition_submissions").insert({
+        first_name, last_name, age: ageNum, phone, email, discipline,
+        bio, video_path, video_link, parent_name, parent_consent,
+      });
+      if (insErr) throw insErr;
+
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error(err);
+      toast({
+        title: lang === "fr" ? "Erreur d'envoi" : "Submission error",
+        description: err?.message || (lang === "fr" ? "Réessaie dans un instant." : "Please try again."),
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+
 
   const handleFiles = (files: FileList | null) => {
     if (!files || files.length === 0) return;
@@ -101,25 +159,20 @@ const AuditionPage = () => {
           </div>
 
           {/* Form */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
-            className="space-y-6"
-          >
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formFirstName")} *</label>
-                <input required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                <input name="first_name" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formLastName")} *</label>
-                <input required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                <input name="last_name" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formAge")} *</label>
                 <input
+                  name="age"
                   type="number"
                   min={16}
                   required
@@ -130,15 +183,15 @@ const AuditionPage = () => {
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formPhone")} *</label>
-                <input type="tel" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                <input name="phone" type="tel" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formEmail")} *</label>
-                <input type="email" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                <input name="email" type="email" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
               </div>
               <div>
                 <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formDiscipline")} *</label>
-                <select required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal">
+                <select name="discipline" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal">
                   <option value="">—</option>
                   {DISCIPLINES.map((d) => (
                     <option key={d} value={d}>{t(`auditionPage.disciplines.${d}`)}</option>
@@ -147,14 +200,17 @@ const AuditionPage = () => {
               </div>
             </div>
 
+
             <div>
               <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formBio")}</label>
               <textarea
+                name="bio"
                 maxLength={500}
                 rows={3}
                 className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal resize-none"
               />
             </div>
+
 
             {/* Video mode toggle */}
             <div>
@@ -225,11 +281,13 @@ const AuditionPage = () => {
                 </div>
               ) : (
                 <input
+                  name="video_link"
                   type="url"
                   placeholder={t("auditionPage.linkPlaceholder")}
                   className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal"
                 />
               )}
+
             </div>
 
             {/* Consents */}
@@ -260,7 +318,8 @@ const AuditionPage = () => {
                 </p>
                 <div>
                   <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.parentName")} *</label>
-                  <input required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+                  <input name="parent_name" required className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal" />
+
                 </div>
                 <label className="flex items-start gap-3 text-cream/70 text-sm cursor-pointer">
                   <input type="checkbox" required className="mt-0.5 accent-gold-royal" />
@@ -271,10 +330,12 @@ const AuditionPage = () => {
 
             <button
               type="submit"
-              className="w-full gradient-gold text-black-deep font-bold py-3 rounded-md text-lg hover:opacity-90 transition-opacity gold-glow"
+              disabled={submitting}
+              className="w-full gradient-gold text-black-deep font-bold py-3 rounded-md text-lg hover:opacity-90 transition-opacity gold-glow disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {t("auditionPage.submit")}
+              {submitting ? (lang === "fr" ? "Envoi en cours…" : "Submitting…") : t("auditionPage.submit")}
             </button>
+
           </form>
         </div>
       </section>
