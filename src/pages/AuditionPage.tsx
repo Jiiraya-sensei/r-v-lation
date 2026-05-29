@@ -204,11 +204,13 @@ const AuditionPage = () => {
             <div>
               <label className="block text-cream/80 text-sm mb-1">{t("auditionPage.formBio")}</label>
               <textarea
+                name="bio"
                 maxLength={500}
                 rows={3}
                 className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal resize-none"
               />
             </div>
+
 
             {/* Video mode toggle */}
             <div>
