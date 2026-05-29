@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Instagram } from "lucide-react";
 import GoldParticles from "@/components/GoldParticles";
 import VideoBackground from "@/components/VideoBackground";
-import heroPoster from "@/assets/hero-stage.jpg";
+import heroPoster from "@/assets/hero-stage.webp";
 
 const FinalCallSection = () => {
   const { t } = useTranslation();

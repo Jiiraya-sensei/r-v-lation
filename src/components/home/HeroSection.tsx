@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { EVENT_DATES } from "@/config/eventDates";
 import GoldParticles from "@/components/GoldParticles";
 import VideoBackground from "@/components/VideoBackground";
-import heroPoster from "@/assets/hero-stage.jpg";
+import heroPoster from "@/assets/hero-stage.webp";
 
 const HeroSection = () => {
   const { t, i18n } = useTranslation();

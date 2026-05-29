@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import VideoBackground from "@/components/VideoBackground";
-import audiencePoster from "@/assets/audience.jpg";
+import audiencePoster from "@/assets/audience.webp";
 
 const TicketingSection = () => {
   const { t } = useTranslation();
