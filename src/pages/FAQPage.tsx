@@ -101,6 +101,29 @@ const FAQPage = () => {
   const lang = (i18n.language?.startsWith("fr") ? "fr" : "en") as "fr" | "en";
   const c = content[lang];
 
+  useEffect(() => {
+    const ld = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      inLanguage: lang === "fr" ? "fr-CA" : "en-CA",
+      mainEntity: c.items.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    };
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.setAttribute("data-jsonld", "faq");
+    script.textContent = JSON.stringify(ld);
+    document.head.querySelectorAll('script[data-jsonld="faq"]').forEach((n) => n.remove());
+    document.head.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, [lang, c.items]);
+
+
   return (
     <Layout>
       {/* HERO */}
