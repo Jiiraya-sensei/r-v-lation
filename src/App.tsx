@@ -214,25 +214,27 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <DocumentLang />
-        <Suspense fallback={<RouteFallback />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auditionner" element={<AuditionPage />} />
-            <Route path="/billetterie" element={<TicketsPage />} />
-            <Route path="/billetterie/confirmation" element={<CheckoutReturn />} />
-            <Route path="/connexion" element={<LoginPage />} />
-            <Route path="/inscription" element={<RegisterPage />} />
-            <Route path="/a-propos" element={<AboutPage />} />
-            <Route path="/jury" element={<JuryPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/bourses" element={<BoursesPage />} />
-            <Route path="/conditions-generales" element={<LegalPage type="terms" />} />
-            <Route path="/confidentialite" element={<LegalPage type="privacy" />} />
-            <Route path="/utilisation-videos" element={<LegalPage type="video" />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        <AuthProvider>
+          <DocumentLang />
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/auditionner" element={<AuditionPage />} />
+              <Route path="/billetterie" element={<TicketsPage />} />
+              <Route path="/billetterie/confirmation" element={<CheckoutReturn />} />
+              <Route path="/connexion" element={<LoginPage />} />
+              <Route path="/inscription" element={<RegisterPage />} />
+              <Route path="/a-propos" element={<AboutPage />} />
+              <Route path="/jury" element={<JuryPage />} />
+              <Route path="/faq" element={<FAQPage />} />
+              <Route path="/bourses" element={<BoursesPage />} />
+              <Route path="/conditions-generales" element={<LegalPage type="terms" />} />
+              <Route path="/confidentialite" element={<LegalPage type="privacy" />} />
+              <Route path="/utilisation-videos" element={<LegalPage type="video" />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
