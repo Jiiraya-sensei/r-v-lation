@@ -42,7 +42,7 @@ const AuditionCallSection = () => {
             <VideoBackground
               src="/videos/audition-bg.mp4"
               poster={performerPoster}
-              alt="Artiste en performance"
+              alt={t("alt.performer")}
               className="rounded-lg w-full h-[450px] object-cover"
             />
           </motion.div>

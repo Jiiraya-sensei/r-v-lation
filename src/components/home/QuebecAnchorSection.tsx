@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import chateauImg from "@/assets/chateau-frontenac.jpg";
 
 const QuebecAnchorSection = () => {
+  const { t } = useTranslation();
   return (
     <section className="relative h-[420px] overflow-hidden">
       <img
         src={chateauImg}
-        alt="Château Frontenac, Québec"
+        alt={t("alt.chateau")}
         className="absolute inset-0 w-full h-full object-cover"
         loading="lazy"
       />
@@ -18,7 +20,7 @@ const QuebecAnchorSection = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="font-accent italic text-gold-light text-lg md:text-xl mb-2"
         >
-          Au cœur de la Vieille Capitale
+          {t("quebecAnchor.tagline")}
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -27,7 +29,7 @@ const QuebecAnchorSection = () => {
           transition={{ delay: 0.1 }}
           className="font-display text-3xl md:text-5xl text-gold-gradient tracking-wider"
         >
-          Québec, terre de talents
+          {t("quebecAnchor.title")}
         </motion.h2>
       </div>
     </section>

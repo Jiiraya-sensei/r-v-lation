@@ -150,5 +150,23 @@
     "hasAccount": "Déjà inscrit ?",
     "loginLink": "Se connecter",
     "googleLogin": "Se connecter avec Google"
+  },
+  "notFound": {
+    "title": "Oups ! Page introuvable",
+    "back": "Retour à l'accueil"
+  },
+  "quebecAnchor": {
+    "tagline": "Au cœur de la Vieille Capitale",
+    "title": "Québec, terre de talents"
+  },
+  "alt": {
+    "heroStage": "Scène illuminée",
+    "performer": "Artiste en performance",
+    "showStage": "Scène en action",
+    "audience": "Foule enthousiaste",
+    "chateau": "Château Frontenac, Québec"
+  },
+  "bourses": {
+    "mainPrize": "Prix principal"
   }
 }

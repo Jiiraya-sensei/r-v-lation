@@ -220,7 +220,7 @@ const BoursesPage = () => {
                       transition={{ delay: 0.4 }}
                       className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold-royal text-black-deep text-xs font-bold px-3 py-1 rounded-full"
                     >
-                      Prix principal
+                      {lang === "fr" ? "Prix principal" : "Main Prize"}
                     </motion.div>
                   )}
 

@@ -26,7 +26,7 @@ const ShowSection = () => {
               heavy
               src="/videos/show-1.mp4"
               poster={showPoster}
-              alt="Scène en action"
+              alt={t("alt.showStage")}
               className="rounded-lg w-full h-[400px] object-cover"
             />
           </motion.div>
