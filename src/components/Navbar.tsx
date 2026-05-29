@@ -124,11 +124,12 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger — 44x44 tap target */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden text-gold-royal z-50"
+            className="lg:hidden text-gold-royal z-50 inline-flex items-center justify-center w-11 h-11 -mr-2"
             aria-label="Menu"
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
