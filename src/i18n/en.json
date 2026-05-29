@@ -150,5 +150,23 @@
     "hasAccount": "Already registered?",
     "loginLink": "Log in",
     "googleLogin": "Sign in with Google"
+  },
+  "notFound": {
+    "title": "Oops! Page not found",
+    "back": "Return to home"
+  },
+  "quebecAnchor": {
+    "tagline": "In the heart of the Old Capital",
+    "title": "Québec, land of talent"
+  },
+  "alt": {
+    "heroStage": "Illuminated stage",
+    "performer": "Performing artist",
+    "showStage": "Stage in action",
+    "audience": "Enthusiastic crowd",
+    "chateau": "Château Frontenac, Québec"
+  },
+  "bourses": {
+    "mainPrize": "Main Prize"
   }
 }
