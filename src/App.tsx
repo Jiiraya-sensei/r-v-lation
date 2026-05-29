@@ -239,6 +239,7 @@ const App = () => (
               <Route path="/conditions-generales" element={<LegalPage type="terms" />} />
               <Route path="/confidentialite" element={<LegalPage type="privacy" />} />
               <Route path="/utilisation-videos" element={<LegalPage type="video" />} />
+              <Route path="/unsubscribe" element={<UnsubscribePage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
