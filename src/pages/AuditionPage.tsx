@@ -14,6 +14,15 @@ const AuditionPage = () => {
   const [submitted, setSubmitted] = useState(false);
   const [age, setAge] = useState("");
   const [dragActive, setDragActive] = useState(false);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFiles = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    if (!file.type.startsWith("video/")) return;
+    setVideoFile(file);
+  };
 
   const isMinor = age !== "" && parseInt(age) >= 16 && parseInt(age) < 18;
 
