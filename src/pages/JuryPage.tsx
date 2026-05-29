@@ -4,8 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
+import Layout from "@/components/Layout";
 import GoldParticles from "@/components/GoldParticles";
-
+import VideoBackground from "@/components/VideoBackground";
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
