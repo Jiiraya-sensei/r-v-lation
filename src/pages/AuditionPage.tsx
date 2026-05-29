@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import Layout from "@/components/Layout";
 import GoldParticles from "@/components/GoldParticles";
 import { EVENT_DATES } from "@/config/eventDates";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
-const DISCIPLINES = ["singing", "dance", "instrument", "comedy", "theater", "circus", "other"] as const;
 
 const AuditionPage = () => {
   const { t, i18n } = useTranslation();
