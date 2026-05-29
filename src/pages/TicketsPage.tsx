@@ -34,6 +34,10 @@ const TicketsPage = () => {
             <p className="text-cream/70 text-center mb-12">{t("ticketPage.intro")}</p>
           </motion.div>
 
+          <h2 className="font-display text-2xl text-gold-royal text-center mb-6">
+            {t("ticketPage.pricingHeading")}
+          </h2>
+
           {/* Presale card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -79,6 +83,10 @@ const TicketsPage = () => {
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
+              <h2 className="font-display text-2xl text-gold-royal mb-2">
+                {t("ticketPage.selectionHeading")}
+              </h2>
+
               {/* Show selection */}
               <div className="space-y-3">
                 {showOptions.map((opt) => (
