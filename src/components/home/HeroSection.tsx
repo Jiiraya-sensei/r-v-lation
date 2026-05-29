@@ -24,7 +24,7 @@ const HeroSection = () => {
         <VideoBackground
           src="/videos/hero-bg.mp4"
           poster={heroPoster}
-          alt="Scène illuminée"
+          alt={t("alt.heroStage")}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black-deep/70 via-black-deep/50 to-black-deep" />
