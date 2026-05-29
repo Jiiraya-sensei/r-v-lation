@@ -14,19 +14,20 @@ interface VideoBackgroundProps {
  * Renders a background video only when visible in the viewport.
  * - Falls back to the poster image on reduced motion, slow networks, or (when heavy) on mobile.
  * - Uses IntersectionObserver so off-screen videos never download.
- * - preload="none" until visible, then "auto" so playback starts smoothly.
+ * - The poster image acts as the sentinel while shouldLoad is false, so the
+ *   element is laid out (positioning, sizing) exactly like the final <video>.
  */
 const VideoBackground = ({ src, poster, className, alt = "", heavy = false }: VideoBackgroundProps) => {
   const { enabled, isMobile } = useVideoBackground();
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const elRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
 
   const useVideo = enabled && !(heavy && isMobile);
 
+  // Observe whichever element is currently mounted (poster placeholder, then video).
   useEffect(() => {
-    if (!useVideo || !wrapperRef.current) return;
-    const el = wrapperRef.current;
+    if (!useVideo || shouldLoad || !elRef.current) return;
+    const el = elRef.current;
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -41,12 +42,12 @@ const VideoBackground = ({ src, poster, className, alt = "", heavy = false }: Vi
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [useVideo]);
+  }, [useVideo, shouldLoad]);
 
   // Pause when off-screen to save CPU/battery once loaded
   useEffect(() => {
-    if (!shouldLoad || !videoRef.current) return;
-    const video = videoRef.current;
+    if (!shouldLoad || !(elRef.current instanceof HTMLVideoElement)) return;
+    const video = elRef.current;
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -60,9 +61,10 @@ const VideoBackground = ({ src, poster, className, alt = "", heavy = false }: Vi
     return () => io.disconnect();
   }, [shouldLoad]);
 
-  if (!useVideo) {
+  if (!useVideo || !shouldLoad) {
     return (
       <img
+        ref={(el) => { elRef.current = el; }}
         src={poster}
         alt={alt}
         className={className}
@@ -73,31 +75,19 @@ const VideoBackground = ({ src, poster, className, alt = "", heavy = false }: Vi
   }
 
   return (
-    <div ref={wrapperRef} className={className} style={{ position: "relative" }}>
-      {shouldLoad ? (
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster={poster}
-          className={className}
-          aria-hidden="true"
-        >
-          <source src={src} type="video/mp4" />
-        </video>
-      ) : (
-        <img
-          src={poster}
-          alt={alt}
-          className={className}
-          loading="lazy"
-          decoding="async"
-        />
-      )}
-    </div>
+    <video
+      ref={(el) => { elRef.current = el; }}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      poster={poster}
+      className={className}
+      aria-hidden="true"
+    >
+      <source src={src} type="video/mp4" />
+    </video>
   );
 };
 
