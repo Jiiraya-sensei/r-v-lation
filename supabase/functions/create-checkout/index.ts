@@ -9,7 +9,8 @@ const corsHeaders = {
 async function createCheckoutSession(options: {
   priceId: string;
   quantity?: number;
-  customerEmail?: string;
+  customerEmail: string;
+  customerName?: string;
   returnUrl: string;
   environment: StripeEnv;
 }) {
@@ -25,13 +26,19 @@ async function createCheckoutSession(options: {
   const product = await stripe.products.retrieve(productId);
   const productDescription = product.name;
 
+  const quantity = options.quantity || 1;
   const session = await stripe.checkout.sessions.create({
-    line_items: [{ price: stripePrice.id, quantity: options.quantity || 1 }],
+    line_items: [{ price: stripePrice.id, quantity }],
     mode: "payment",
     ui_mode: "embedded_page",
     return_url: options.returnUrl,
+    customer_email: options.customerEmail,
     payment_intent_data: { description: productDescription },
-    ...(options.customerEmail && { customer_email: options.customerEmail }),
+    metadata: {
+      price_lookup_key: options.priceId,
+      quantity: String(quantity),
+      customer_name: options.customerName ?? "",
+    },
   });
 
   return session.client_secret;
@@ -44,8 +51,8 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { priceId, quantity, customerEmail, returnUrl, environment } = body || {};
-    if (!priceId || !returnUrl || !environment) {
+    const { priceId, quantity, customerEmail, customerName, returnUrl, environment } = body || {};
+    if (!priceId || !returnUrl || !environment || !customerEmail) {
       return new Response(JSON.stringify({ error: "Missing parameters" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -62,6 +69,7 @@ Deno.serve(async (req) => {
       priceId,
       quantity,
       customerEmail,
+      customerName,
       returnUrl,
       environment,
     });

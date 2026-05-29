@@ -22,8 +22,14 @@ const TicketsPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [purchasing, setPurchasing] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
 
   const total = selectedShow === "bundle" ? PRESALE_PRICE * 2 * quantity : PRESALE_PRICE * quantity;
+
+  const canCheckout =
+    !!selectedShow && firstName.trim().length > 0 && lastName.trim().length > 0 && /\S+@\S+\.\S+/.test(email);
 
   const showOptions: { value: ShowOption; label: string }[] = [
     { value: "semifinal", label: t("ticketPage.semifinalOption") },
@@ -55,6 +61,8 @@ const TicketsPage = () => {
                 <StripeEmbeddedCheckout
                   priceId={PRICE_IDS[selectedShow]}
                   quantity={quantity}
+                  customerEmail={email}
+                  customerName={`${firstName} ${lastName}`.trim()}
                 />
               </div>
             </motion.div>
@@ -64,7 +72,6 @@ const TicketsPage = () => {
                 {t("ticketPage.pricingHeading")}
               </h2>
 
-              {/* Presale card */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -76,7 +83,6 @@ const TicketsPage = () => {
                 <div className="text-black-deep/70 text-sm">{t("ticketing.limitedSeats")}</div>
               </motion.div>
 
-              {/* Future categories (disabled) */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
                 {[
                   { name: lang === "fr" ? "Étudiant" : "Student", price: "15 $" },
@@ -149,6 +155,43 @@ const TicketsPage = () => {
                     </select>
                   </div>
 
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gold-royal/20 pt-6">
+                    <div>
+                      <label className="block text-cream/80 text-sm mb-1">
+                        {lang === "fr" ? "Prénom" : "First name"} *
+                      </label>
+                      <input
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                        className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-cream/80 text-sm mb-1">
+                        {lang === "fr" ? "Nom" : "Last name"} *
+                      </label>
+                      <input
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                        className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-cream/80 text-sm mb-1">
+                        {lang === "fr" ? "Courriel (réception des billets)" : "Email (ticket delivery)"} *
+                      </label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="w-full bg-black-warm border border-gold-royal/20 text-cream px-4 py-2.5 rounded-md focus:outline-none focus:border-gold-royal"
+                      />
+                    </div>
+                  </div>
+
                   {selectedShow && (
                     <div className="flex items-center justify-between border-t border-gold-royal/20 pt-4">
                       <span className="text-cream font-semibold">{t("ticketPage.total")}</span>
@@ -157,7 +200,7 @@ const TicketsPage = () => {
                   )}
 
                   <button
-                    disabled={!selectedShow}
+                    disabled={!canCheckout}
                     onClick={() => setCheckoutOpen(true)}
                     className="w-full gradient-gold text-black-deep font-bold py-3 rounded-md text-lg hover:opacity-90 transition-opacity gold-glow disabled:opacity-40 disabled:cursor-not-allowed"
                   >
