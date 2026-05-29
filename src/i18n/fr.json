@@ -14,7 +14,7 @@
     "register": "Inscription"
   },
   "hero": {
-    "title": "RÉVÉLATION",
+    "title": "RÉVÉLATION — Le gala de talents étudiant",
     "subtitle": "Le gala de talents étudiant du Cégep Limoilou",
     "auditions": "Auditions",
     "semifinal": "Demi-finale",
@@ -122,7 +122,9 @@
     "quantity": "Nombre de billets",
     "total": "Total",
     "checkout": "Passer au paiement",
-    "comingSoon": "Ouverture prochaine"
+    "comingSoon": "Ouverture prochaine",
+    "pricingHeading": "Nos tarifs",
+    "selectionHeading": "Sélection des billets"
   },
   "footer": {
     "rights": "© 2026 RÉVÉLATION. Tous droits réservés.",

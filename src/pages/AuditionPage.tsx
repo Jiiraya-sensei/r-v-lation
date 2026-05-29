@@ -152,7 +152,7 @@ const AuditionPage = () => {
 
           {/* Video guidelines */}
           <div className="border border-gold-royal/40 rounded-lg p-6 mb-12 bg-gold-royal/5">
-            <h3 className="font-display text-xl text-gold-royal mb-4">{t("auditionPage.videoTitle")}</h3>
+            <h2 className="font-display text-xl text-gold-royal mb-4">{t("auditionPage.videoTitle")}</h2>
             <ul className="space-y-2 text-cream/70 text-sm">
               <li>• {t("auditionPage.videoDuration")}</li>
               <li className="text-gold-light font-semibold bg-ruby-deep/20 rounded px-3 py-2">
