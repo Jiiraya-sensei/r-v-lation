@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { HelpCircle } from "lucide-react";
 import Layout from "@/components/Layout";
 import GoldParticles from "@/components/GoldParticles";
+
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -98,6 +100,29 @@ const FAQPage = () => {
   const { i18n } = useTranslation();
   const lang = (i18n.language?.startsWith("fr") ? "fr" : "en") as "fr" | "en";
   const c = content[lang];
+
+  useEffect(() => {
+    const ld = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      inLanguage: lang === "fr" ? "fr-CA" : "en-CA",
+      mainEntity: c.items.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    };
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.setAttribute("data-jsonld", "faq");
+    script.textContent = JSON.stringify(ld);
+    document.head.querySelectorAll('script[data-jsonld="faq"]').forEach((n) => n.remove());
+    document.head.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, [lang, c.items]);
+
 
   return (
     <Layout>
