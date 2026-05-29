@@ -66,6 +66,7 @@ const AuditionPage = () => {
       const { error: insErr } = await supabase.from("audition_submissions").insert({
         first_name, last_name, age: ageNum, phone, email, discipline,
         bio, video_path, video_link, parent_name, parent_consent,
+        user_id: user?.id ?? null,
       });
       if (insErr) throw insErr;
 
