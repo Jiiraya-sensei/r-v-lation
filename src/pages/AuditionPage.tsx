@@ -185,15 +185,43 @@ const AuditionPage = () => {
 
               {videoMode === "upload" ? (
                 <div
-                  onDragOver={(e) => { e.preventDefault(); setDragActive(true); }}
-                  onDragLeave={() => setDragActive(false)}
-                  onDrop={(e) => { e.preventDefault(); setDragActive(false); }}
-                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
-                    dragActive ? "border-gold-royal bg-gold-royal/5" : "border-gold-royal/20"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => fileInputRef.current?.click()}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      fileInputRef.current?.click();
+                    }
+                  }}
+                  onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); setDragActive(true); }}
+                  onDragEnter={(e) => { e.preventDefault(); e.stopPropagation(); setDragActive(true); }}
+                  onDragLeave={(e) => { e.preventDefault(); e.stopPropagation(); setDragActive(false); }}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setDragActive(false);
+                    handleFiles(e.dataTransfer.files);
+                  }}
+                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold-royal ${
+                    dragActive ? "border-gold-royal bg-gold-royal/10" : "border-gold-royal/20 hover:border-gold-royal/50"
                   }`}
                 >
-                  <p className="text-cream/50 text-sm">{t("auditionPage.uploadDrop")}</p>
-                  <input type="file" accept="video/mp4,video/quicktime,video/avi" className="hidden" />
+                  <p className="text-cream/70 text-sm">
+                    {videoFile ? videoFile.name : t("auditionPage.uploadDrop")}
+                  </p>
+                  {videoFile && (
+                    <p className="text-cream/40 text-xs mt-1">
+                      {(videoFile.size / (1024 * 1024)).toFixed(1)} MB
+                    </p>
+                  )}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="video/mp4,video/quicktime,video/avi,video/x-msvideo,video/*"
+                    className="hidden"
+                    onChange={(e) => handleFiles(e.target.files)}
+                  />
                 </div>
               ) : (
                 <input
