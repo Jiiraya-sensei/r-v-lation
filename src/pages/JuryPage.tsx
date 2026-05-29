@@ -5,6 +5,8 @@ import { Sparkles, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import GoldParticles from "@/components/GoldParticles";
+import VideoBackground from "@/components/VideoBackground";
+
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -187,6 +189,12 @@ const JuryPage = () => {
     <Layout>
       {/* HERO THÉÂTRAL */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-black-deep">
+        <VideoBackground
+          src="/videos/jury-stage.mp4"
+          poster="/videos/jury-stage-poster.jpg"
+          className="absolute inset-0 w-full h-full object-cover opacity-35"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black-deep/70 via-black-deep/60 to-black-deep" />
         <GoldParticles className="opacity-30" />
 
         {/* Rideaux latéraux */}

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Trophy, Star, Heart, Sparkles, Tv } from "lucide-react";
 import Layout from "@/components/Layout";
 import GoldParticles from "@/components/GoldParticles";
+import VideoBackground from "@/components/VideoBackground";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -160,6 +161,12 @@ const BoursesPage = () => {
     <Layout>
       {/* HERO */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-black-deep">
+        <VideoBackground
+          src="/videos/celebration.mp4"
+          poster="/videos/celebration-poster.jpg"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black-deep/70 via-black-deep/50 to-black-deep" />
         <GoldParticles className="opacity-30" />
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
           <motion.p
