@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import chateauImg from "@/assets/chateau-frontenac.jpg";
 
 const QuebecAnchorSection = () => {
