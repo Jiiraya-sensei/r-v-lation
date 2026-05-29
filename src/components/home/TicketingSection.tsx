@@ -21,7 +21,7 @@ const TicketingSection = () => {
             <VideoBackground
               src="/videos/ticket-bg.mp4"
               poster={audiencePoster}
-              alt="Foule enthousiaste"
+              alt={t("alt.audience")}
               className="rounded-lg w-full h-[350px] object-cover"
             />
           </motion.div>
